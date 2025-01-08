@@ -1,0 +1,7 @@
+version: "1.0"
+sql:
+  engine: "postgres"
+  schema: "schema.sql"
+  output:
+    package: "cl.playground.SpringSecurityBackend.model"
+    lombok: true
