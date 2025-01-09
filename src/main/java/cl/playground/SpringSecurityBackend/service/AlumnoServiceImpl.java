@@ -1,5 +1,6 @@
 package cl.playground.SpringSecurityBackend.service;
 
+import cl.playground.SpringSecurityBackend.dto.AlumnoCreateDTO;
 import cl.playground.SpringSecurityBackend.dto.AlumnoResponseDto;
 import cl.playground.SpringSecurityBackend.mapper.AlumnoMapper;
 import cl.playground.SpringSecurityBackend.repository.AlumnoRepository;
@@ -37,18 +38,12 @@ public class AlumnoServiceImpl implements AlumnoService {
     }
 
     @Override
-    public void saveAlumno(AlumnoResponseDto alumnoResponseDto) {
-        log.info("Saving  a new student: " + alumnoResponseDto);
-        if (alumnoResponseDto != null) {
-            Alumno alumno = new Alumno();
-            alumno.setRut(alumnoResponseDto.getRut());
-            alumno.setNombre(alumnoResponseDto.getNombre());
-            alumno.setDireccion(alumnoResponseDto.getDireccion());
-
+    public void saveAlumno(AlumnoCreateDTO alumnoCreateDto) {
+        log.info("Saving  a new student: " + alumnoCreateDto);
+        if (alumnoCreateDto != null) {
+            Alumno alumno = AlumnoMapper.toAlumno(alumnoCreateDto);
             alumnoRepository.save(alumno);
         }
-
     }
-
 
 }
