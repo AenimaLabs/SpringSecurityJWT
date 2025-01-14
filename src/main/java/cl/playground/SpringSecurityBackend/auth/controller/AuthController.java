@@ -1,6 +1,7 @@
 package cl.playground.SpringSecurityBackend.auth.controller;
 
 import cl.playground.SpringSecurityBackend.auth.dto.AuthenticationRequest;
+import cl.playground.SpringSecurityBackend.auth.dto.AuthenticationResponse;
 import cl.playground.SpringSecurityBackend.auth.security.JwtUtil;
 import cl.playground.SpringSecurityBackend.auth.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,10 @@ public class AuthController {
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        String jwt = jwtUtil.generateToken(userDetails);
+        String role = authService.getUserRole(authenticationRequest.getUsername());
+
+        return ResponseEntity.ok(new AuthenticationResponse(role, jwt));
     }
 
 }
