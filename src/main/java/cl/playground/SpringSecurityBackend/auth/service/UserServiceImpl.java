@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(
             UserRepository userRepository,
             RoleRepository roleRepository,
-            @Lazy PasswordEncoder passwordEncoder
+            @Lazy PasswordEncoder passwordEncoder // hay un error aqui  // TRANMQUI // :D
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponseDTO createUser(UserCreateDTO userCreateDTO) {
         User user = new User();
         user.setUsername(userCreateDTO.getUsername());
@@ -51,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserByID(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -58,13 +61,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponseDTO changeUserStatus(Long userId, UserChangeStatusDTO userChangeStatusDTO) {
-        return null;
+        // Obtenemos un usuario de la BD y lo guardamos en una variabla
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Verificamos que contengamos un valor para modificar al usuario
+        if (userChangeStatusDTO.getIsActive() != null) {
+            user.setActive(userChangeStatusDTO.getIsActive());
+
+            User updatedUser = userRepository.save(user);
+
+            // Si funciona se retorna el usuario modificado en estado
+            return UserMapper.toDTO(updatedUser);
+        } else {
+
+            // Si no funciona le retornamos el usuario que ya existia
+            return UserMapper.toDTO(user);
+        }
     }
 
     @Override
     public List<UserResponseDTO> findAllUsers() {
-        return List.of();
+        return userRepository.findAll()
+                .stream()
+                .map(UserMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     private Set<Role> mapRoles(Set<String> roleNames) {
