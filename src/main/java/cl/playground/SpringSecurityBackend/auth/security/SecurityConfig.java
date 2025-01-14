@@ -1,5 +1,6 @@
 package cl.playground.SpringSecurityBackend.auth.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,14 +37,16 @@ public class SecurityConfig {
                 .csrf((csrf -> csrf.disable()))
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint((request, response, authException) -> {
-                            throw authException;
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.getWriter().write("Unauthorized: " + authException.getMessage());
                         })
                 )
+
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test").permitAll()
-                        .requestMatchers(("/api/students/**")).hasAnyAuthority("STUDENT")
-                        .requestMatchers("/api/subjects/**").hasAnyAuthority("STUDENT")
+                        .requestMatchers("/api/v1/alumnos/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/subjects/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -68,7 +71,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
 

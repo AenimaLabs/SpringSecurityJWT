@@ -66,6 +66,6 @@ public class AuthService implements UserDetailsService {
         return user.getRoles().stream()
                 .findFirst()
                 .map(Role::getName)
-                .orElse("STUDENT");
+                .orElse("ADMIN");
     }
 }
