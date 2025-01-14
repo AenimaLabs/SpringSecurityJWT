@@ -114,10 +114,6 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", isActive=" + isActive +
-<<<<<<< HEAD
-                ", roles=" + roles +
-=======
->>>>>>> 457699f (contraseña erronea compa)
                 '}';
     }
 

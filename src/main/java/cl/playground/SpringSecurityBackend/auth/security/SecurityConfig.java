@@ -45,10 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test").permitAll()
-<<<<<<< HEAD
-=======
                         .requestMatchers("/hash-password").permitAll()
->>>>>>> 457699f (contraseña erronea compa)
                         .requestMatchers("/api/v1/alumnos/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/subjects/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()

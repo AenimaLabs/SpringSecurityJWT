@@ -29,13 +29,11 @@ public class AuthService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-<<<<<<< HEAD
-=======
+
         System.out.println("User loaded: " + user.getUsername());
         System.out.println("Password: " + user.getPassword());
         System.out.println("Roles: " + user.getRoles());
 
->>>>>>> 457699f (contraseña erronea compa)
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
