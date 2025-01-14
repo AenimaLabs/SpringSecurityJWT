@@ -23,10 +23,17 @@ INSERT INTO materias (nombre, alumno_id) VALUES ('Arte', 8);
 INSERT INTO materias (nombre, alumno_id) VALUES ('Musica', 9);
 
 -- Inserta los roles disponibles
+<<<<<<< HEAD
 INSERT INTO roles (role_id, name) VALUES (1, 'ADMIN');
 
 -- Inserta el usuario administrador con su hash de contraseña (bcrypt)
 INSERT INTO users (user_id, username, rut, password, email, is_active) VALUES (1, 'admin', '26.931.652-7', '$2a$10$7J1AsHG4gFfrAX1peAh0HuYifRqAHy3/V2m7j/UoLgh9pA3/5IiRa', 'admin@example.com', true);
+=======
+INSERT INTO roles (name) VALUES ('ADMIN');
+
+-- Inserta el usuario administrador con su hash de contraseña (bcrypt)
+INSERT INTO users (username, rut, password, email, is_active) VALUES ('admin', '26.931.652-7', '$2a$10$jMEiqDfyI0LfLcKhnUQTH./Hxac12x9HWKkAyJlhRyiscO9tN4dDC', 'admin@example.com', true);
+>>>>>>> 457699f (contraseña erronea compa)
 
 -- Asigna el rol ADMIN al usuario admin
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);

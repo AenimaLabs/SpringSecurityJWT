@@ -54,7 +54,11 @@ public class JwtUtil {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
+<<<<<<< HEAD
                 .parseClaimsJwt(token)
+=======
+                .parseClaimsJws(token)
+>>>>>>> 457699f (contraseña erronea compa)
                 .getBody();
     }
 

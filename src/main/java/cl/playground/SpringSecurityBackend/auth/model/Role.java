@@ -47,7 +47,10 @@ public class Role {
         return "Role{" +
                 "roleId=" + roleId +
                 ", name='" + name + '\'' +
+<<<<<<< HEAD
                 ", users=" + users +
+=======
+>>>>>>> 457699f (contraseña erronea compa)
                 '}';
     }
 }
