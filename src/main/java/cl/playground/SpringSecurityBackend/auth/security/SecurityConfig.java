@@ -44,10 +44,9 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/test").permitAll()
                         .requestMatchers("/hash-password").permitAll()
+                        .requestMatchers("/api/users/**").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/v1/alumnos/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/api/subjects/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
