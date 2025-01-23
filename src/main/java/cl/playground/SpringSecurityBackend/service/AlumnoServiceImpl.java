@@ -30,10 +30,6 @@ public class AlumnoServiceImpl implements AlumnoService {
         Page<AlumnoResponseDto> response = alumnos.map(AlumnoMapper::toDto);
         log.info("Returning " + response.getTotalElements() + " students to the client.");
 
-       // List<AlumnoResponseDto> alumnoList = alumnos.getContent()
-        ///                                            .stream()
-
-
         return response;
     }
 
